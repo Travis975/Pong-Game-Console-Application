@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+@SuppressWarnings("serial")
 class RecordsPanel extends JPanel {
     public RecordsPanel(JFrame frame, List<Integer> topScores) {
         setLayout(new BorderLayout());

@@ -25,7 +25,7 @@ public class Paddle {
         g.setColor(Color.WHITE);
         g.fillRect(x, y, WIDTH, HEIGHT);
     }
-    
+    // Getters
     public int getX() {
         return x;
     }
@@ -41,7 +41,7 @@ public class Paddle {
     public int getHeight() {
         return HEIGHT;
     }
-
+    // Setters
 	public void setY(int int1) {
 		y = int1;
 		

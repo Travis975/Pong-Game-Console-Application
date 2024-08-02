@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 
+@SuppressWarnings("serial")
 class GamePanel extends JPanel implements ActionListener, KeyListener {
     public static final int WIDTH = 800, HEIGHT = 600;
     private Ball ball;
@@ -84,12 +85,18 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     private void checkCollisions() {
         // Ball collision with left paddle
-        if (ball.getX() <= leftPaddle.getX() + leftPaddle.getWidth() && ball.getY() + ball.getSize() >= leftPaddle.getY() && ball.getY() <= leftPaddle.getY() + leftPaddle.getHeight()) {
+        if (ball.getX() <= leftPaddle.getX() + leftPaddle.getWidth() 
+        	&& ball.getY() + ball.getSize() >= leftPaddle.getY() 
+        	&& ball.getY() <= leftPaddle.getY() + leftPaddle.getHeight()) {
+        	// Send the ball the opposite direction
             ball.reverseXDirection();
             playerScore++;
         }
         // Ball collision with right paddle
-        if (ball.getX() + ball.getSize() >= rightPaddle.getX() && ball.getY() + ball.getSize() >= rightPaddle.getY() && ball.getY() <= rightPaddle.getY() + rightPaddle.getHeight()) {
+        if (ball.getX() + ball.getSize() >= rightPaddle.getX() 
+        	&& ball.getY() + ball.getSize() >= rightPaddle.getY() 
+        	&& ball.getY() <= rightPaddle.getY() + rightPaddle.getHeight()) {
+        	// Send the ball the opposite direction
             ball.reverseXDirection();
             aiScore++;
         }
@@ -103,9 +110,9 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
             resetBall();
         }
         // End game if one player reaches a score of 10 (or any other condition you want)
-        if (playerScore >= 10 || aiScore >= 10) {
-            endGame();
-        }
+//        if (playerScore >= 10 || aiScore >= 10) {
+//            endGame();
+//        }
     }
 
     private void resetBall() {
@@ -114,10 +121,11 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     private void endGame() {
         gameEnded = true;
-        topScores.add(playerScore); // Store the player's score
-        topScores.sort((a, b) -> b - a); // Sort in descending order
+        // Store the player's score, sort in desc order then keep the top 3s
+        topScores.add(playerScore);
+        topScores.sort((a, b) -> b - a); 
         if (topScores.size() > 3) {
-            topScores.remove(topScores.size() - 1); // Keep only top 3 scores
+            topScores.remove(topScores.size() - 1); 
         }
 
         // Switch to main menu
@@ -133,6 +141,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
     private void quitGame() {
         // Stop the timer and switch to the main menu
         timer.stop();
+        endGame();
         SwingUtilities.invokeLater(() -> {
             MenuPanel menuPanel = new MenuPanel(frame, topScores);
             frame.getContentPane().removeAll();

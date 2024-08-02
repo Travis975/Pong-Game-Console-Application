@@ -32,7 +32,7 @@ public class Ball {
         g.setColor(Color.WHITE);
         g.fillOval(x, y, SIZE, SIZE);
     }
-    
+    // Getters
     public int getX() {
         return x;
     }
@@ -52,10 +52,9 @@ public class Ball {
     public int getYSpeed() {
         return ySpeed;
     }
-
+    // Setters
 	public void setX(int int1) {
-		x = int1;
-		
+		x = int1;	
 	}
 
 	public void setY(int int1) {
