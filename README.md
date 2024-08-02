@@ -11,7 +11,9 @@ Pong Game – Client / Server Implementation
 
 1.2 Description 
 
-    The pong game is a simple single player game with an AI opponent. The player controls a paddle, and the goal is to hit a ball back and forth with the AI opponent and try to score. The score will increase every time the player hits the ball back. Every 10 or so points the ball will get faster to increase the difficulty over time.  
+    The pong game is a simple single player game with an AI opponent. The player controls a paddle, 
+    and the goal is to hit a ball back and forth with the AI opponent and try to score. 
+    The score will increase every time the player hits the ball back.  
     
 
 1.3 Revision History 
@@ -26,18 +28,21 @@ Section 2 – Overview
 2.1 Purpose 
 
     The purpose of this project is to make a game in Java to hone my programming skills. 
-    Then implement a client / server side to it to handle multithreading. So many users can play their own games at once. 
+    Then implement a client / server side to it to handle multithreading. 
+    So many users can play their own games at once. 
 
 2.2 Scope 
 
-    The scope includes the core mechanics of Pong, including player controls, basic AI behavior, game physics, user interface, and client / server handling.   
+    The scope includes the core mechanics of Pong, including player controls, 
+    basic AI behavior, game physics, user interface, and client / server handling.   
  
 
 2.3 Requirements  
 
 2.3.1 Functional Requirements 
 
-    R1: The game will open with a main menu where user can select to start a game or see past records (up to 3 games) 
+    R1: The game will open with a main menu where users can
+        select to start a game or see past records (up to 3 games) 
     R2: The game will implement an AI to control one paddle  
     R3: The game shall display a game over message when completed and score 
     R4: Chance to store score to records after game then restart 
@@ -51,11 +56,13 @@ Section 2 – Overview
 2.3.3 Technical Requirements  
 
     Hardware: The game should run on any PC with basic graphic capabilities 
-    Software: The game will be developed in Java using Swing for the GUI and run on the local host port 4000.  
+    Software: The game will be developed in Java using Swing for the GUI
+              and run on the local host port 4000.  
 
 2.3.4 Security Requirements 
 
-    The game does not handle sensitive information, so minimal security measures are implemented. 
+    The game does not handle sensitive information, 
+    so minimal security measures are implemented. 
 
 2.3.5 Estimates  
 
@@ -78,7 +85,8 @@ Section 3 – System Architecture
 
 3.1 Overview  
 
-    The system consists of a game loop that updates the positions of the ball and paddles, checks for collisions, and renders the game state on the screen 
+    The system consists of a game loop that updates the positions of the ball and paddles, 
+    checks for collisions, and renders the game state on the screen 
 
 Section 4 – Data Dictionary  
 
@@ -98,7 +106,7 @@ Section 5 – Data Design
 
 5.1 Persistent/Static Data 
 
-    The only persistent data is the player records. The player can store their top 3 scores from games played.  
+    The only persistent data is the player records. The player can store their top 3 scores from games played
     The relationship between players and score is 1:1  
     All other data is volatile and resets after each game.  
 
