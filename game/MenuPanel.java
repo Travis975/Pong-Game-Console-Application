@@ -6,54 +6,42 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 class MenuPanel extends JPanel {
+    private JButton startGameButton;
+    private JButton recordsButton;
+    private JButton exitButton;
+
     public MenuPanel(JFrame frame, List<Integer> topScores) {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(50, 50, 50, 50);
 
         // Create the "Start Game" button
-        JButton startGameButton = new JButton("Start Game");
-        startGameButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Replace the main menu panel with the game panel
-                GamePanel gamePanel = new GamePanel(frame, topScores);
-                frame.getContentPane().removeAll();
-                frame.add(gamePanel);
-                frame.revalidate();
-                frame.repaint();
-                gamePanel.requestFocusInWindow();
+        startGameButton = new JButton("Start Game");
+        startGameButton.addActionListener(e -> {
+            if (startGameListener != null) {
+                startGameListener.actionPerformed(e);
             }
         });
 
         // Create the "Records" button
-        JButton recordsButton = new JButton("Records");
-        recordsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Replace the main menu panel with the records panel
-                RecordsPanel recordsPanel = new RecordsPanel(frame, topScores);
-                frame.getContentPane().removeAll();
-                frame.add(recordsPanel);
-                frame.revalidate();
-                frame.repaint();
-            }
+        recordsButton = new JButton("Records");
+        recordsButton.addActionListener(e -> {
+            // Replace the main menu panel with the records panel
+            RecordsPanel recordsPanel = new RecordsPanel(frame, topScores);
+            frame.getContentPane().removeAll();
+            frame.add(recordsPanel);
+            frame.revalidate();
+            frame.repaint();
         });
 
         // Create the "Exit" button
-        JButton exitButton = new JButton("Exit");
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        exitButton = new JButton("Exit");
+        exitButton.addActionListener(e -> System.exit(0));
 
         // Add buttons to the menu panel
         gbc.gridx = 0;
@@ -63,5 +51,11 @@ class MenuPanel extends JPanel {
         add(recordsButton, gbc);
         gbc.gridy = 2;
         add(exitButton, gbc);
+    }
+
+    private ActionListener startGameListener;
+
+    public void setStartGameListener(ActionListener listener) {
+        this.startGameListener = listener;
     }
 }

@@ -52,4 +52,14 @@ public class Ball {
     public int getYSpeed() {
         return ySpeed;
     }
+
+	public void setX(int int1) {
+		x = int1;
+		
+	}
+
+	public void setY(int int1) {
+		y = int1;
+		
+	}
 }

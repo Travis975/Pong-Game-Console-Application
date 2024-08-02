@@ -41,4 +41,9 @@ public class Paddle {
     public int getHeight() {
         return HEIGHT;
     }
+
+	public void setY(int int1) {
+		y = int1;
+		
+	}
 }
