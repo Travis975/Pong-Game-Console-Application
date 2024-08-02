@@ -26,7 +26,8 @@ public class Server {
                 System.out.println("Client connected: " + clientSocket.getInetAddress());
                 pool.execute(new ClientHandler(clientSocket));
             }
-        } catch (IOException e) {
+        } 
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -53,14 +54,17 @@ public class Server {
                     out.writeObject(gameState);
                     out.flush();
                 }
-            } catch (IOException | ClassNotFoundException e) {
+            } 
+            catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
-            } finally {
+            } 
+            finally {
                 try {
                     in.close();
                     out.close();
                     clientSocket.close();
-                } catch (IOException e) {
+                } 
+                catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -69,7 +73,8 @@ public class Server {
         private void handleClientInput(String input) {
             if (input.equals("W")) {
                 leftPaddle.update(true, false);
-            } else if (input.equals("S")) {
+            } 
+            else if (input.equals("S")) {
                 leftPaddle.update(false, true);
             }
             ball.update();
@@ -94,7 +99,8 @@ public class Server {
             if (ball.getX() <= 0) {
                 aiScore++;
                 resetBall();
-            } else if (ball.getX() >= 800 - ball.getSize()) {
+            } 
+            else if (ball.getX() >= 800 - ball.getSize()) {
                 playerScore++;
                 resetBall();
             }

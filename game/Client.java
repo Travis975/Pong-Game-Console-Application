@@ -39,7 +39,8 @@ public class Client extends JPanel implements KeyListener, ActionListener {
 
     private void showMenu(String serverAddress) {
         JFrame frame = new JFrame("Pong Client");
-        List<Integer> topScores = new ArrayList<>(); // Placeholder for top scores
+        // Placeholder for top scores
+        List<Integer> topScores = new ArrayList<>(); 
 
         MenuPanel menuPanel = new MenuPanel(frame, topScores);
         menuPanel.setStartGameListener(e -> {
@@ -49,10 +50,11 @@ public class Client extends JPanel implements KeyListener, ActionListener {
         });
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(WIDTH, HEIGHT); // Set size explicitly
-        frame.setPreferredSize(new Dimension(WIDTH, HEIGHT)); // Ensure preferred size is set
+        // Ensure preferred size is set
+        frame.setSize(WIDTH, HEIGHT);
+        frame.setPreferredSize(new Dimension(WIDTH, HEIGHT)); 
         frame.add(menuPanel);
-        frame.pack(); // Ensure proper packing
+        frame.pack(); 
         frame.setVisible(true);
     }
 
@@ -74,7 +76,8 @@ public class Client extends JPanel implements KeyListener, ActionListener {
             
             timer.start();
             gameStarted = true;
-        } catch (IOException e) {
+        } 
+        catch (IOException e) {
             e.printStackTrace();
             System.out.println("Failed to connect to server.");
         }
@@ -101,9 +104,11 @@ public class Client extends JPanel implements KeyListener, ActionListener {
             try {
                 if (wPressed) {
                     out.writeObject("W");
-                } else if (sPressed) {
+                } 
+                else if (sPressed) {
                     out.writeObject("S");
-                } else {
+                } 
+                else {
                     out.writeObject("");
                 }
                 out.flush();
@@ -112,7 +117,8 @@ public class Client extends JPanel implements KeyListener, ActionListener {
                 updateGameState(gameState);
 
                 repaint();
-            } catch (IOException | ClassNotFoundException ex) {
+            } 
+            catch (IOException | ClassNotFoundException ex) {
                 ex.printStackTrace();
             }
         }
