@@ -37,7 +37,6 @@ public class Client extends JPanel implements KeyListener, ActionListener {
         // Initialize the frame and menu panel
         MenuPanel menuPanel = new MenuPanel(frame, topScores);
         menuPanel.setStartGameListener(e -> startGame(serverAddress, frame, topScores));
-
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));

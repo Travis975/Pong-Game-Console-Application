@@ -7,6 +7,8 @@ public class Ball {
     private static final int SIZE = 15;
     private int x, y;
     private int xSpeed, ySpeed;
+    
+    // RNG for the ball spawn
     private Random ballDirection;
     
     public Ball(int x, int y) {

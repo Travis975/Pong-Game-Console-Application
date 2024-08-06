@@ -159,6 +159,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
         // Stop the timer and switch to the main menu
         timer.stop();
         endGame();
+        
         SwingUtilities.invokeLater(() -> {
             MenuPanel menuPanel = new MenuPanel(frame, topScores);
             frame.getContentPane().removeAll();
