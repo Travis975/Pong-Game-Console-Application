@@ -1,4 +1,4 @@
-package game;	
+package game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,64 +20,62 @@ public class Client extends JPanel implements KeyListener, ActionListener {
     private boolean wPressed, sPressed;
     private int playerScore = 0, aiScore = 0;
     private boolean gameStarted = false;
+    private JFrame frame;
+    private List<Integer> topScores;
 
     public Client(String serverAddress) {
-        System.out.println("Initializing Client...");
+        this.topScores = new ArrayList<>();
+        this.frame = new JFrame("Pong Client");
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setBackground(Color.BLACK);
         setFocusable(true);
         addKeyListener(this);
-
-        ball = new Ball(WIDTH / 2, HEIGHT / 2);
-        leftPaddle = new Paddle(10, HEIGHT / 2 - 50);
-        rightPaddle = new Paddle(WIDTH - 20, HEIGHT / 2 - 50);
-        timer = new Timer(10, this);
-
-        // Show the main menu first
-        SwingUtilities.invokeLater(() -> showMenu(serverAddress));
+        showMenu(serverAddress);
     }
 
     private void showMenu(String serverAddress) {
-        JFrame frame = new JFrame("Pong Client");
-        // Placeholder for top scores
-        List<Integer> topScores = new ArrayList<>(); 
-
+        // Initialize the frame and menu panel
         MenuPanel menuPanel = new MenuPanel(frame, topScores);
-        menuPanel.setStartGameListener(e -> {
-            if (!gameStarted) {
-                startGame(serverAddress, frame, topScores);
-            }
-        });
+        menuPanel.setStartGameListener(e -> startGame(serverAddress, frame, topScores));
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        // Ensure preferred size is set
         frame.setSize(WIDTH, HEIGHT);
-        frame.setPreferredSize(new Dimension(WIDTH, HEIGHT)); 
+        frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         frame.add(menuPanel);
-        frame.pack(); 
+        frame.pack();
         frame.setVisible(true);
     }
 
-
     private void startGame(String serverAddress, JFrame frame, List<Integer> topScores) {
+        if (gameStarted) {
+            // Clean up existing game resources if any
+            try {
+                if (socket != null && !socket.isClosed()) {
+                    socket.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         try {
             socket = new Socket(serverAddress, 4000);
             out = new ObjectOutputStream(socket.getOutputStream());
             in = new ObjectInputStream(socket.getInputStream());
             System.out.println("Connected to server at " + serverAddress + ":4000");
-            
-            // Switch to the game panel
+
+            // Initialize a new GamePanel
             GamePanel gamePanel = new GamePanel(frame, topScores);
             frame.getContentPane().removeAll();
             frame.add(gamePanel);
             frame.setSize(WIDTH, HEIGHT);
             frame.revalidate();
             frame.repaint();
-            
+
+            timer = new Timer(10, this);
             timer.start();
             gameStarted = true;
-        } 
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Failed to connect to server.");
         }
@@ -104,11 +102,9 @@ public class Client extends JPanel implements KeyListener, ActionListener {
             try {
                 if (wPressed) {
                     out.writeObject("W");
-                } 
-                else if (sPressed) {
+                } else if (sPressed) {
                     out.writeObject("S");
-                } 
-                else {
+                } else {
                     out.writeObject("");
                 }
                 out.flush();
@@ -117,8 +113,7 @@ public class Client extends JPanel implements KeyListener, ActionListener {
                 updateGameState(gameState);
 
                 repaint();
-            } 
-            catch (IOException | ClassNotFoundException ex) {
+            } catch (IOException | ClassNotFoundException ex) {
                 ex.printStackTrace();
             }
         }

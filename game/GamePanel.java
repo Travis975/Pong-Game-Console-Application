@@ -4,9 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
+import java.util.Random;
 
 @SuppressWarnings("serial")
 class GamePanel extends JPanel implements ActionListener, KeyListener {
+	// Declare all variables and game pieces 
     public static final int WIDTH = 800, HEIGHT = 600;
     private Ball ball;
     private Paddle leftPaddle, rightPaddle;
@@ -16,6 +18,10 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
     private List<Integer> topScores;
     private JFrame frame;
     private boolean gameEnded = false;
+    
+    // Variables to introduce Random Number Generation (RNG) to AI paddle movement
+    private Random randomNum = new Random();
+    private int AIbufferReaction = 0;
 
     public GamePanel(JFrame frame, List<Integer> topScores) {
         this.frame = frame;
@@ -74,13 +80,26 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
     }
 
     private void updateAIPaddle() {
-        if (ball.getXSpeed() > 0) {
-            if (ball.getY() > rightPaddle.getY() + rightPaddle.getHeight() / 2) {
+    	// Check the buffer for the AI movement
+    	if(AIbufferReaction > 0) {
+    		AIbufferReaction--;
+    		return;
+    	}
+    	// Given range for the paddle to adjust to the ball
+        int offset = randomNum.nextInt(30) - 15; // Random offset between -15 and 15
+        int targetY = ball.getY() + offset;
+        
+        // Only move when the ball is moving towards the right paddle
+        if (ball.getXSpeed() > 0) { 
+            if (targetY > rightPaddle.getY() + rightPaddle.getHeight() / 2) {
                 rightPaddle.update(false, true);
-            } else {
+            } 
+            else {
                 rightPaddle.update(true, false);
             }
         }
+        // The delay in the AI reaction by 2 - 3 frames
+        AIbufferReaction = randomNum.nextInt(2) + 2;
     }
 
     private void checkCollisions() {
@@ -88,17 +107,18 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
         if (ball.getX() <= leftPaddle.getX() + leftPaddle.getWidth() 
         	&& ball.getY() + ball.getSize() >= leftPaddle.getY() 
         	&& ball.getY() <= leftPaddle.getY() + leftPaddle.getHeight()) {
+        	
         	// Send the ball the opposite direction
             ball.reverseXDirection();
-            playerScore++;
         }
         // Ball collision with right paddle
         if (ball.getX() + ball.getSize() >= rightPaddle.getX() 
         	&& ball.getY() + ball.getSize() >= rightPaddle.getY() 
         	&& ball.getY() <= rightPaddle.getY() + rightPaddle.getHeight()) {
+        	
         	// Send the ball the opposite direction
             ball.reverseXDirection();
-            aiScore++;
+           
         }
         // Ball out of bounds
         if (ball.getX() <= 0) {
@@ -109,10 +129,6 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
             playerScore++;
             resetBall();
         }
-        // End game if one player reaches a score of 10 (or any other condition you want)
-//        if (playerScore >= 10 || aiScore >= 10) {
-//            endGame();
-//        }
     }
 
     private void resetBall() {
@@ -121,6 +137,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
 
     private void endGame() {
         gameEnded = true;
+        
         // Store the player's score, sort in desc order then keep the top 3s
         topScores.add(playerScore);
         topScores.sort((a, b) -> b - a); 

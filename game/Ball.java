@@ -1,17 +1,21 @@
 package game;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Random;
 
 public class Ball {
     private static final int SIZE = 15;
     private int x, y;
     private int xSpeed, ySpeed;
+    private Random ballDirection;
     
     public Ball(int x, int y) {
         this.x = x;
         this.y = y;
         this.xSpeed = 2;
         this.ySpeed = 2;
+        this.ballDirection = new Random();
+        setRandomDirection();
     }
     
     public void update() {
@@ -32,6 +36,7 @@ public class Ball {
         g.setColor(Color.WHITE);
         g.fillOval(x, y, SIZE, SIZE);
     }
+
     // Getters
     public int getX() {
         return x;
@@ -61,4 +66,9 @@ public class Ball {
 		y = int1;
 		
 	}
+    // To make the ball spawn with a randomly set direction at the start of game or after each point
+    public void setRandomDirection() {
+        xSpeed = ballDirection.nextBoolean() ? 2 : -2;
+        ySpeed = ballDirection.nextBoolean() ? 2 : -2;
+    }
 }
