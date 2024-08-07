@@ -34,9 +34,13 @@ public class Client extends JPanel implements KeyListener, ActionListener {
     }
 
     private void showMenu(String serverAddress) {
-        // Initialize the frame and menu panel
+    	// Initialize the frame and menu panel
         MenuPanel menuPanel = new MenuPanel(frame, topScores);
+        
+        // Set the start game listener with the server address and other parameters
         menuPanel.setStartGameListener(e -> startGame(serverAddress, frame, topScores));
+        
+        // Configure the frame
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(WIDTH, HEIGHT);
         frame.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -52,7 +56,8 @@ public class Client extends JPanel implements KeyListener, ActionListener {
                 if (socket != null && !socket.isClosed()) {
                     socket.close();
                 }
-            } catch (IOException e) {
+            } 
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -74,7 +79,8 @@ public class Client extends JPanel implements KeyListener, ActionListener {
             timer = new Timer(10, this);
             timer.start();
             gameStarted = true;
-        } catch (IOException e) {
+        } 
+        catch (IOException e) {
             e.printStackTrace();
             System.out.println("Failed to connect to server.");
         }
@@ -101,9 +107,11 @@ public class Client extends JPanel implements KeyListener, ActionListener {
             try {
                 if (wPressed) {
                     out.writeObject("W");
-                } else if (sPressed) {
+                } 
+                else if (sPressed) {
                     out.writeObject("S");
-                } else {
+                } 
+                else {
                     out.writeObject("");
                 }
                 out.flush();
@@ -112,7 +120,8 @@ public class Client extends JPanel implements KeyListener, ActionListener {
                 updateGameState(gameState);
 
                 repaint();
-            } catch (IOException | ClassNotFoundException ex) {
+            } 
+            catch (IOException | ClassNotFoundException ex) {
                 ex.printStackTrace();
             }
         }

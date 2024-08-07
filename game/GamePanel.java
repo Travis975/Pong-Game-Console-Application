@@ -52,6 +52,8 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
         this.setLayout(null); // Use absolute positioning for the button
         quitButton.setBounds(10, 10, 120, 30); // Position and size the button
         this.add(quitButton);
+        
+        this.requestFocusInWindow();
     }
 
     @Override
@@ -138,7 +140,7 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
     private void endGame() {
         gameEnded = true;
         
-        // Store the player's score, sort in desc order then keep the top 3s
+        // Store the player's score, sort in desc order then keep the top 3 scores
         topScores.add(playerScore);
         topScores.sort((a, b) -> b - a); 
         if (topScores.size() > 3) {
@@ -156,17 +158,10 @@ class GamePanel extends JPanel implements ActionListener, KeyListener {
     }
 
     private void quitGame() {
+    	System.out.println("Quitting Game!");
         // Stop the timer and switch to the main menu
         timer.stop();
         endGame();
-        
-        SwingUtilities.invokeLater(() -> {
-            MenuPanel menuPanel = new MenuPanel(frame, topScores);
-            frame.getContentPane().removeAll();
-            frame.add(menuPanel);
-            frame.revalidate();
-            frame.repaint();
-        });
     }
 
     @Override
