@@ -13,7 +13,8 @@ Pong Game – Client / Server Implementation
 
     The pong game is a simple single player game with an AI opponent. The player controls a paddle, 
     and the goal is to hit a ball back and forth with the AI opponent and try to score. 
-    The score will increase every time the player hits the ball back.  
+    The score will increase every time the player is able to get the ball past the AI. 
+    Likewise for the AI opponent. 
     
 
 1.3 Revision History 
@@ -21,6 +22,7 @@ Pong Game – Client / Server Implementation
         Date     |           Comment             |            Author
     -------------|-------------------------------|------------------------
     27/07/2024   | Made the design Doc           | Travis Schellenberg 
+    07/08/2024   | Updated the design doc        | Travis Schellenberg
              
 
 Section 2 – Overview 
@@ -42,10 +44,11 @@ Section 2 – Overview
 2.3.1 Functional Requirements 
 
     R1: The game will open with a main menu where users can
-        select to start a game or see past records (up to 3 games) 
+        select to start a game or see past records 
+        (up to 3 games) from current session
     R2: The game will implement an AI to control one paddle  
-    R3: The game shall display a game over message when completed and score 
-    R4: Chance to store score to records after game then restart 
+    R3: The game ball spawns in a random direction each time 
+    R4: Store the score to records after each game
 
 2.3.2 Non-Functional Requirements 
 
@@ -106,9 +109,8 @@ Section 5 – Data Design
 
 5.1 Persistent/Static Data 
 
-    The only persistent data is the player records. The player can store their top 3 scores from games played
-    The relationship between players and score is 1:1  
-    All other data is volatile and resets after each game.  
+    The only persistent data is the player records. The game will store their top 3 scores from games played
+    in the current session. All other data is volatile and resets after each game.  
 
 Section 6 – User Interface Design  
 
@@ -126,7 +128,7 @@ Section 6 – User Interface Design
     UC2: Player controls paddle using keyboard 
     UC3: AI moves paddle automatically 
     UC4: Game displays score and handles game over 
-    UC5: Player adds record / check records 
+ 
 
  
 
